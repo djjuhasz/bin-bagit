@@ -1,12 +1,12 @@
 # bin-bagit
 
-**bin-bagit** an experiment in building a Docker image running
+**bin-bagit** an experiment in building a Docker image containing
 <https://github.com/LibraryOfCongress/bagit-python> as a single file binary.
 
 **bin-bagit** uses:
 
 - <https://github.com/astral-sh/uv> for Python package management
-- <https://github.com/six8/pyinstaller-alpine> to build a single file binary for
+- <https://github.com/six8/pyinstaller-alpine> to build the single file binary for
   Alpine Linux from the `bagit-python` package
 
 ## Notes
