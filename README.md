@@ -1,21 +1,13 @@
 # bin-bagit
 
-**bin-bagit** an experiment in building a Docker image containing
+**bin-bagit** is an experiment in building a Docker image containing
 <https://github.com/LibraryOfCongress/bagit-python> as a single file binary.
 
 **bin-bagit** uses:
 
 - <https://github.com/astral-sh/uv> for Python package management
-- <https://github.com/six8/pyinstaller-alpine> to build the single file binary for
-  Alpine Linux from the `bagit-python` package
-
-## Notes
-
-- `setuptools` is a dependency for <https://pypi.org/project/bagit/1.8.1/> (it
-  imports  `pkg_resources`) but is not in listed in the `requirements.txt` file.
-- The `pkg_resources` import has been removed from the bagit-python git
-  repository as of <https://github.com/LibraryOfCongress/bagit-python/commit/44f21392604e3930af9f0b6f9f0937ea3d56fe2e> but I haven't taken the time to
-  build `bagit-python` from the source.
+- <https://pyinstaller.org/> to build the single file binary from the
+  `bagit-python` package
 
 ## Usage
 
