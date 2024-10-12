@@ -12,29 +12,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+FROM python:3.13-slim AS builder
+
 # Install uv
-FROM python:3.8-slim AS source
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 
 # Change the working directory to the `app` directory
 WORKDIR /app
 
 # Install dependencies
+RUN set -ex \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends binutils gcc zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 RUN uv venv
-RUN uv pip install --no-cache bagit==v1.8.1 setuptools
+RUN uv pip install --no-cache bagit==v1.8.1 pyinstaller==v6.10.0
 
-# Create a single file binary using pyinstaller
-FROM six8/pyinstaller-alpine AS builder
-WORKDIR /app
-COPY --from=source /app/.venv /app
-RUN pyinstaller \
+RUN .venv/bin/pyinstaller \
     --noconfirm \
     --onefile \
     --log-level DEBUG \
     --clean \
-    bin/bagit.py
+    .venv/bin/bagit.py
 
-FROM alpine:3.20
+FROM debian:12.7-slim
 
 # Copy the binary
 COPY --from=builder /app/dist/bagit /app/bagit
